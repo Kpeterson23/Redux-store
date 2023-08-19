@@ -1,4 +1,4 @@
-import { Outlet } from 'react-router-dom';
+import React from 'react';
 import {
   ApolloClient,
   InMemoryCache,
@@ -6,9 +6,10 @@ import {
   createHttpLink,
 } from '@apollo/client';
 import { setContext } from '@apollo/client/link/context';
-
+import { Provider } from 'react-redux'; // Add this import
+import store from './yourReduxStore'; // Replace with the path to your Redux store
 import Nav from './components/Nav';
-import { StoreProvider } from './utils/GlobalState';
+// Remove the import for StoreProvider
 
 const httpLink = createHttpLink({
   uri: '/graphql',
@@ -32,10 +33,11 @@ const client = new ApolloClient({
 function App() {
   return (
     <ApolloProvider client={client}>
-      <StoreProvider>
+      {/* Use Provider from react-redux */}
+      <Provider store={store}>
         <Nav />
         <Outlet />
-      </StoreProvider>
+      </Provider>
     </ApolloProvider>
   );
 }
